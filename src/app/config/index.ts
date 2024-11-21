@@ -1,11 +1,11 @@
-import express, { Application, Request, Response } from 'express';
+import dotenv from 'dotenv';
+import path from 'path';
 
-const app: Application = express();
-
-app.use(express.json());
-
-app.get('/', (req: Request, res: Response) => {
-    res.send('Welcome to 🏍🏍🏍 GearNode 🏍🏍🏍');
+dotenv.config({
+    path: path.join(process.cwd(), '.env'),
 });
 
-export default app;
+export default {
+    port: process.env.PORT,
+    db_url: process.env.DB_URL,
+};

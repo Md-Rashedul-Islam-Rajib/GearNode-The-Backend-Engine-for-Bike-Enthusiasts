@@ -9,7 +9,7 @@ export const OrderSchema = new Schema<TOrder>({
     },
     product: {
         type: Schema.Types.ObjectId,
-        ref: 'ProductSchema',
+        ref: 'Bike',
         required: true
     },
     quantity: {
@@ -18,10 +18,17 @@ export const OrderSchema = new Schema<TOrder>({
         min: [1, "Quantity must be a positive number"]
     },
     totalPrice: {
-        type: Number,
-        required: true,
-        min: [1, "TotalPrice must be a positive number"]
+        type: Number
     }
+});
+
+// middleware for setting totalPrice value automatically
+OrderSchema.pre('save', async function (next) {
+    const product = await mongoose.model('Bike').findById(this.product);
+    if (product) {
+        this.totalPrice = product.price * this.quantity;
+    }
+    next();
 });
 
 export const OrderModel = mongoose.model<IOrder>("Order", OrderSchema);

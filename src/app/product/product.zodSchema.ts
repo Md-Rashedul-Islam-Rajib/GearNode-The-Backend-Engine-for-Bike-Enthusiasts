@@ -15,21 +15,24 @@ export const ProductZodSchema = z.object({
             message: 'Price is required',
         })
         .min(0, 'Price must be a positive number'),
-        category: z.enum(['Mountain', 'Road', 'Hybrid', 'Electric'], {
-            message: 'Category is required',
-        }),
-        description: z.string({
-            message: 'Description is required',
-        }),
-        quantity: z
+    category: z.enum(['Mountain', 'Road', 'Hybrid', 'Electric'], {
+        message: 'Category is required',
+    }),
+    description: z.string({
+        message: 'Description is required',
+    }),
+    quantity: z
         .number({
             message: 'Quantity is required',
         })
         .min(0, 'Quantity must be a positive number'),
-        inStock: z.boolean({
-            message: 'In-stock status is required',
-        }),
-    });
+    inStock: z.boolean({
+        message: 'In-stock status is required',
+    }),
+    isDeleted: z
+        .boolean()
+        .default(false)
+});
     
     
     // zod schema for update bike product

@@ -4,8 +4,8 @@ export const OrderSchema = z.object({
     email: z
         .string()
         .email('Invalid email address')
-        .nonempty('Customer email is required'),
-    product: z.string().nonempty('Product reference (ID) is required'), // ObjectId as string
+        .min(1)
+    product: z.string().nonempty('Product id is required'), 
     quantity: z
         .number()
         .int('Quantity must be an integer')

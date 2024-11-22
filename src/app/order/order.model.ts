@@ -22,11 +22,33 @@ export const OrderSchema = new Schema<TOrder>({
     }
 });
 
-// middleware for setting totalPrice value automatically
+// middleware for setting totalPrice value and adjusting stock availability
 OrderSchema.pre('save', async function (next) {
     const product = await mongoose.model('Bike').findById(this.product);
+    if (!product) {
+        return next(new Error('Bike not found'));
+    }
+    // Checking availability of selected bike
+     if (product.quantity < this.quantity) {
+         return next(new Error('Your selected bike is out of stock'));
+    }
+    
+    product.quantity -= this.quantity;
+    product.inStock = product.quantity > 0;
+    await product.save();
+
+    // setting totalPrice value
+    this.totalPrice = product.price * this.quantity;
+    
+    next();
+});
+
+OrderSchema.pre('save', async function (next) {
+    const product = await mongoose.model('Product').findById(this.product);
     if (product) {
-        this.totalPrice = product.price * this.quantity;
+        product.quantity += this.quantity;
+        product.inStock = true;
+        await product.save();
     }
     next();
 });

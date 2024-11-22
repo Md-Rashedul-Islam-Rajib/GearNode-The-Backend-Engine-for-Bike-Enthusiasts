@@ -1,29 +1,50 @@
 import { z } from 'zod';
 
+
+
+// zod schema for create bike product 
 export const ProductZodSchema = z.object({
     name: z.string({
-        required_error: 'Product name is required',
+        message: 'Product name is required',
     }),
     brand: z.string({
-        required_error: 'Brand is required',
+        message: 'Brand is required',
     }),
     price: z
         .number({
-            required_error: 'Price is required',
+            message: 'Price is required',
         })
         .min(0, 'Price must be a positive number'),
-    category: z.enum(['Mountain', 'Road', 'Hybrid', 'Electric'], {
-        required_error: 'Category is required',
-    }),
-    description: z.string({
-        required_error: 'Description is required',
-    }),
-    quantity: z
+        category: z.enum(['Mountain', 'Road', 'Hybrid', 'Electric'], {
+            message: 'Category is required',
+        }),
+        description: z.string({
+            message: 'Description is required',
+        }),
+        quantity: z
         .number({
-            required_error: 'Quantity is required',
+            message: 'Quantity is required',
         })
         .min(0, 'Quantity must be a positive number'),
-    inStock: z.boolean({
-        required_error: 'In-stock status is required',
-    }),
-});
+        inStock: z.boolean({
+            message: 'In-stock status is required',
+        }),
+    });
+    
+    
+    // zod schema for update bike product
+    export const UpdateProductZodSchema = z.object({
+        price: z
+        .number({
+            message: 'Price is required',
+        })
+        .min(0, 'Price must be a positive number'),
+        quantity: z
+        .number({
+            message: 'Quantity is required',
+        })
+        .min(0, 'Quantity must be a positive number'),
+        
+    });
+
+

@@ -14,6 +14,13 @@ export class ProductController {
         try {
             const productData: TBike = req.body;
             const validatedData = ProductZodSchema.parse(productData);
+            const data = await ProductService.createProduct(validatedData); 
+            console.log(data);
+            res.status(201).json({
+                message: "Bike created successfully",
+                status: true,
+                data
+            });
         } catch (error) {
             next(error);
         }
@@ -35,7 +42,7 @@ export class ProductController {
 
     // controller func for get single product by id
     static async getSingleProduct(
-        req: Request,
+        req: Request<{ id: ObjectId }>,
         res: Response,
         next: NextFunction,
     ) {
@@ -60,7 +67,7 @@ export class ProductController {
 
     // controller func for update a product
     static async updatingProduct(
-        req: Request,
+        req: Request<{ id: ObjectId }>,
         res: Response,
         next: NextFunction,
     ) {
@@ -87,9 +94,9 @@ export class ProductController {
 
     // controller func for deleting a product
     static async deleteProduct(
-        req: Request,
+        req: Request<{ id: ObjectId }>,
         res: Response,
-        next : NextFunction
+        next: NextFunction,
     ) {
         try {
             const { id } = req.params;
@@ -97,9 +104,9 @@ export class ProductController {
             if (!deletedProduct)
                 return res.status(404).json({ error: 'Product not found' });
             res.status(200).json({
-                "message": 'Product successfully deleted',
-                "status": true,
-                "data" : {}
+                message: 'Product successfully deleted',
+                status: true,
+                data: {},
             });
         } catch (error) {
             next(error);

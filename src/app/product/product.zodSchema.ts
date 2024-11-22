@@ -6,10 +6,10 @@ import { z } from 'zod';
 export const ProductZodSchema = z.object({
     name: z.string({
         message: 'Product name is required',
-    }),
+    }).min(3,"Name must be longer than 3 characters"),
     brand: z.string({
         message: 'Brand is required',
-    }),
+    }).min(3,"Brand must be longer than 3 characters"),
     price: z
         .number({
             message: 'Price is required',
@@ -20,7 +20,7 @@ export const ProductZodSchema = z.object({
     }),
     description: z.string({
         message: 'Description is required',
-    }),
+    }).min(5,"Description must be longer than 5 characters"),
     quantity: z
         .number({
             message: 'Quantity is required',

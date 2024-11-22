@@ -1,6 +1,7 @@
 import { StatusfullError } from './types/error.type';
 import express, { Application, NextFunction, Request, Response } from 'express';
 import { ZodError } from 'zod';
+import ProductRouter from './app/product/product.route';
 
 const app: Application = express();
 
@@ -12,7 +13,7 @@ app.get('/', (req: Request, res: Response) => {
 
 
 // App routes
-app.use("/api/products",);
+app.use("/api/products", ProductRouter);
 
 // global error handler
 app.use((error: StatusfullError, req: Request, res: Response, next: NextFunction) => {

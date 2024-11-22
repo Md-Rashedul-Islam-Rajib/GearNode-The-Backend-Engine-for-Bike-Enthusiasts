@@ -6,34 +6,39 @@ export class ProductService {
     // function for creating product
     static async createProduct(data: TBike) {
         const product = new ProductModel(data);
-        return product.save();
+        const response = await product.save();
+        return response;
     }
 
     // function for get all products
     static async getAllProducts() {
-        return ProductModel.find({ isDeleted: false });
+        const response = await ProductModel.find({ isDeleted: false });
+        return response;
     }
 
     // function for getting single product by id
     static async getSingleProductById(id: ObjectId) {
-        return ProductModel.findById({ _id: id, isDeleted: false });
+        const response = await ProductModel.findById({ _id: id, isDeleted: false });
+        return response;
     }
 
     // function for updating a product by id
     static async updateProduct(id: ObjectId, updatedData: Partial<TProduct>) {
-        return ProductModel.findByIdAndUpdate(
+        const response = await ProductModel.findByIdAndUpdate(
             { _id: id, isDeleted: false },
             updatedData,
             { new: true },
         );
+        return response;
     }
 
     // function for deleting a product by id
     static async deleteProduct(id: ObjectId) {
-        return ProductModel.findByIdAndUpdate(
+        const response = await ProductModel.findByIdAndUpdate(
             id,
             { isDeleted: true },
             { new: true },
         );
+        return response;
     }
 }

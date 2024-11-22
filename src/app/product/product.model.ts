@@ -32,6 +32,10 @@ const ProductSchema = new Schema<TProduct>(
             type: Boolean,
             required: [true, 'Product status is required'],
         },
+        isDeleted: {
+            type: Boolean,
+            default: false
+        }
     },
     {
         timestamps: true,

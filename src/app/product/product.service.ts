@@ -23,7 +23,7 @@ export class ProductService {
             ];
         }
 
-        const response = await ProductModel.find();
+        const response = await ProductModel.find(filterOptions);
         return response;
     }
 

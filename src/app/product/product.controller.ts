@@ -29,7 +29,8 @@ export class ProductController {
     // controller func for get all products
     static async getProducts(req: Request, res: Response, next: NextFunction) {
         try {
-            const products = await ProductService.getAllProducts();
+            const { searchQuery } = req.query;
+            const products = await ProductService.getAllProducts(searchQuery as string);
             res.status(200).json({
                 message: 'Bikes retrieved successfully',
                 status: true,

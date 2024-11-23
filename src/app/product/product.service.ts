@@ -11,7 +11,9 @@ export class ProductService {
     }
 
     // function for get all products
-    static async getAllProducts() {
+    static async getAllProducts(searchQuery: string) {
+        
+
         const response = await ProductModel.find({ isDeleted: false });
         return response;
     }

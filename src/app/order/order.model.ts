@@ -18,7 +18,8 @@ export const OrderSchema = new Schema<TOrder>({
         min: [1, "Quantity must be a positive number"]
     },
     totalPrice: {
-        type: Number
+        type: Number,
+        required: true
     }
 });
 
@@ -37,12 +38,14 @@ OrderSchema.pre('save', async function (next) {
     product.inStock = product.quantity > 0;
     await product.save();
 
-    // setting totalPrice value
-    this.totalPrice = product.price * this.quantity;
+    // // setting totalPrice value
+    // this.totalPrice = product.price * this.quantity;
     
     next();
 });
 
+
+// restoring inStock availability when order removed from db
 OrderSchema.pre('save', async function (next) {
     const product = await mongoose.model('Product').findById(this.product);
     if (product) {

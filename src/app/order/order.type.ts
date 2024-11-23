@@ -1,4 +1,4 @@
-import { Document, Types } from 'mongoose';
+import { Types } from 'mongoose';
 
 export interface IOrder {
     email: string,
@@ -7,4 +7,4 @@ export interface IOrder {
     totalPrice: number
 } 
 
-// export type TOrder = IOrder & Document;
+// // export type TOrder = IOrder & Document;

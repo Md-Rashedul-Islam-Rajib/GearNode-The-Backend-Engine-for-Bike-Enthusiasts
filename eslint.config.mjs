@@ -40,9 +40,9 @@ export default [
     },
 
     rules: {
-      'no-unused-vars': 'off',
+      'no-unused-vars': 'warn',
       'prefer-const': 'warn',
-      'no-console': 'off',
+      'no-console': 'warn',
       'no-undef': 'error',
       semi: ['warn', 'always'],
       '@typescript-eslint/no-empty-object-type': 'off',

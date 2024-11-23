@@ -1,4 +1,4 @@
-import { NextFunction, Request } from "express";
+import { NextFunction,Response, Request } from "express";
 import { OrderZodSchema } from "./order.zodSchema";
 import { OrderService } from "./order.service";
 import mongoose from "mongoose";
@@ -17,7 +17,12 @@ export class OrderController {
                 ...orderData,
                 product: new mongoose.Types.ObjectId(orderData.product),
             };
-            const data = await OrderService.createOrder(validatedData);
+            await OrderService.createOrder(validatedData);
+            return res.status(201).json({
+                message: "Order created successfully",
+                status: true,
+                data : validatedData
+            });
         } catch (error) {
             next(error);
         }

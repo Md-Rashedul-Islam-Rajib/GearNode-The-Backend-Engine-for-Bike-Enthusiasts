@@ -22,7 +22,7 @@ export class ProductService {
                 { category: { $regex: searchQuery, $options: 'i' } },
             ];
         }
-
+        
         const response = await ProductModel.find(filterOptions);
         return response;
     }

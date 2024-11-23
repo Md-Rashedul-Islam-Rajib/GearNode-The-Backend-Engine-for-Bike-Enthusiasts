@@ -1,10 +1,10 @@
 import mongoose, { Schema } from "mongoose";
+// import { OrderType } from "./order.zodSchema";
 import { IOrder } from "./order.type";
 
 export const OrderSchema = new Schema<IOrder>({
     email: {
         type: String,
-        unique: true,
         required: true
     },
     product: {
@@ -19,44 +19,45 @@ export const OrderSchema = new Schema<IOrder>({
     },
     totalPrice: {
         type: Number,
-        required: true
+        // required: true
     }
 });
 
 // middleware for setting totalPrice value and adjusting stock availability
-OrderSchema.pre('save', async function (next) {
-    const product = await mongoose.model('Bike').findById(this.product);
-    if (!product) {
-        return next(new Error('Bike not found'));
-    }
-    // Checking availability of selected bike
-     if (product.quantity < this.quantity) {
-         return next(new Error('Your selected bike is out of stock'));
-    }
+// OrderSchema.pre('save', async function (next) {
+//     const product = await mongoose.model('Bike').findById(this.product);
+//     if (!product) {
+//         return next(new Error('Bike not found'));
+//     }
+//     // Checking availability of selected bike
+//      if (product.quantity < this.quantity) {
+//          return next(new Error('Your selected bike is out of stock'));
+//     }
     
-    product.quantity -= this.quantity;
-    const availability = product.inStock === 0;
-    if (availability) {
-        product.inStock = false;
-    };
-    await product.save();
+//     product.quantity -= this.quantity;
+//     const availability = product.inStock === 0;
+//     if (availability) {
+//         product.inStock = false;
+//     };
+//     await product.save();
 
-    // // setting totalPrice value
-    // this.totalPrice = product.price * this.quantity;
+//     // // setting totalPrice value
+//     this.totalPrice = product.price * this.quantity;
     
-    next();
-});
+//     next();
+// });
+
 
 
 // restoring inStock availability when order removed from db
-OrderSchema.pre('save', async function (next) {
-    const product = await mongoose.model('Product').findById(this.product);
-    if (product) {
-        product.quantity += this.quantity;
-        product.inStock = true;
-        await product.save();
-    }
-    next();
-});
+// OrderSchema.pre('save', async function (next) {
+//     const product = await mongoose.model('Product').findById(this.product);
+//     if (product) {
+//         product.quantity += this.quantity;
+//         product.inStock = true;
+//         await product.save();
+//     }
+//     next();
+// });
 
 export const OrderModel = mongoose.model<IOrder>("Order", OrderSchema);

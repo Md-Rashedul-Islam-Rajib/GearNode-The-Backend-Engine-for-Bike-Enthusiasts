@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
-import { IOrder, TOrder } from "./order.type";
+import { IOrder } from "./order.type";
 
-export const OrderSchema = new Schema<TOrder>({
+export const OrderSchema = new Schema<IOrder>({
     email: {
         type: String,
         unique: true,
@@ -35,7 +35,10 @@ OrderSchema.pre('save', async function (next) {
     }
     
     product.quantity -= this.quantity;
-    product.inStock = product.quantity > 0;
+    const availability = product.inStock === 0;
+    if (availability) {
+        product.inStock = false;
+    };
     await product.save();
 
     // // setting totalPrice value

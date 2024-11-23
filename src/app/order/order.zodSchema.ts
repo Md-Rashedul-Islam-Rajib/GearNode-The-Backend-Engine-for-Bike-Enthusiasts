@@ -1,11 +1,19 @@
+
+import mongoose from 'mongoose';
 import { z } from 'zod';
 
-export const OrderSchema = z.object({
+const ObjectIdSchema = z
+  .string()
+  .refine((value) => mongoose.Types.ObjectId.isValid(value), {
+    message: "Invalid ObjectId",
+  });
+
+export const OrderZodSchema = z.object({
     email: z
         .string()
         .email('Invalid email address')
         .min(1),
-    product: z.string().min(1,'Product id is required'), 
+    product: ObjectIdSchema,
     quantity: z
         .number()
         .int('Quantity must be an integer')
@@ -16,4 +24,4 @@ export const OrderSchema = z.object({
         
 });
 
-export type OrderType = z.infer<typeof OrderSchema>;
+export type OrderType = z.infer<typeof OrderZodSchema>;

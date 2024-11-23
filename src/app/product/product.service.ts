@@ -1,4 +1,4 @@
-import { ObjectId } from 'mongoose';
+import { FilterQuery, ObjectId } from 'mongoose';
 import { ProductModel } from './product.model';
 import { TBike, TProduct } from './product.types';
 
@@ -12,9 +12,18 @@ export class ProductService {
 
     // function for get all products
     static async getAllProducts(searchQuery: string) {
-        
 
-        const response = await ProductModel.find({ isDeleted: false });
+        const filterOptions : FilterQuery<TProduct> = { isDeleted: false };
+
+        if (searchQuery) {
+            filterOptions.$or = [
+                { name: { $regex: searchQuery, $options: 'i' } },
+                { brand: { $regex: searchQuery, $options: 'i' } },
+                { category: { $regex: searchQuery, $options: 'i' } },
+            ];
+        }
+
+        const response = await ProductModel.find();
         return response;
     }
 

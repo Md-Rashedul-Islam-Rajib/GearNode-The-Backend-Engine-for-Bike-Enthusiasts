@@ -94,7 +94,13 @@ class ProductController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id } = req.params;
-                const updatedData = product_zodSchema_1.ProductZodSchema.parse(req.body);
+                const updatedData = product_zodSchema_1.UpdateProductZodSchema.parse(req.body);
+                if (updatedData.quantity && updatedData.quantity == 0) {
+                    updatedData.inStock = false;
+                }
+                if (updatedData.quantity && updatedData.quantity > 0) {
+                    updatedData.inStock = true;
+                }
                 const updatedProduct = yield product_service_1.ProductService.updateProduct(id, updatedData);
                 if (!updatedProduct)
                     return res

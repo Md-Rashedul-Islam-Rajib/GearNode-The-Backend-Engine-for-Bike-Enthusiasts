@@ -6,7 +6,7 @@ const zod_1 = require("zod");
 exports.ProductZodSchema = zod_1.z.object({
     name: zod_1.z.string({
         message: 'Product name is required',
-    }).min(3, "Name must be longer than 3 characters"),
+    }).trim().min(3, "Name must be longer than 3 characters"),
     brand: zod_1.z.string({
         message: 'Brand is required',
     }).min(3, "Brand must be longer than 3 characters"),

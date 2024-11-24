@@ -46,26 +46,4 @@ exports.OrderSchema = new mongoose_1.Schema({
 }, {
     timestamps: true
 });
-// OrderSchema.pre('save', async function (next) {
-//     const product = await mongoose.model('Bike').findById(this.product);
-//     if (!product) {
-//         return next(new Error('Bike not found'));
-//     }
-//         if (!product.inStock) {
-//             return next(new Error("Out of stock"));
-//         }
-//     // Checking availability of selected bike
-//      if (product.quantity < this.quantity ) {
-//          return next(new Error(`Insufficient stock. Only ${product.quantity} available`));
-//     }
-//     product.quantity -= this.quantity;
-//     const availability = product.quantity === 0;
-//     if (availability) {
-//         product.inStock = false;
-//     };
-//     // setting totalPrice value
-//     this.totalPrice = product.price * this.quantity;
-//     await product.save();
-//     next();
-// });
 exports.OrderModel = mongoose_1.default.model("Order", exports.OrderSchema);

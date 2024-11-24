@@ -28,21 +28,23 @@ const mongoose_1 = __importStar(require("mongoose"));
 exports.OrderSchema = new mongoose_1.Schema({
     email: {
         type: String,
-        required: true
+        required: [true, "email is required"]
     },
     product: {
         type: mongoose_1.Schema.Types.ObjectId,
         ref: 'Bike',
-        required: true
+        required: [true, "Product is required"]
     },
     quantity: {
         type: Number,
-        required: true,
+        required: [true, "Quantity is required"],
         min: [1, "Quantity must be a positive number"]
     },
     totalPrice: {
         type: Number,
     }
+}, {
+    timestamps: true
 });
 // OrderSchema.pre('save', async function (next) {
 //     const product = await mongoose.model('Bike').findById(this.product);

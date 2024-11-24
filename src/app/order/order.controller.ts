@@ -1,17 +1,19 @@
 import { NextFunction, Response, Request } from 'express';
 import { OrderService } from './order.service';
 import { ProductModel } from '../product/product.model';
+import { OrderZodSchema } from './order.zodSchema';
 
 export class OrderController {
     // controller func for create product
     static async createOrder(req: Request, res: Response, next: NextFunction) {
         try {
+            const dataForValidation = OrderZodSchema.parse(req.body);
             const {
                 email,
                 product,
                 quantity,
                 totalPrice: orderPrice,
-            } = req.body;
+            } = dataForValidation;
 
             const motorBike = await ProductModel.findById(product);
             const totalPrice = orderPrice || motorBike!.price * quantity;

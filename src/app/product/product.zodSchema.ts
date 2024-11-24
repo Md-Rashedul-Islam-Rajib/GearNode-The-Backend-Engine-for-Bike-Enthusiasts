@@ -6,7 +6,7 @@ import { z } from 'zod';
 export const ProductZodSchema = z.object({
     name: z.string({
         message: 'Product name is required',
-    }).min(3,"Name must be longer than 3 characters"),
+    }).trim().min(3,"Name must be longer than 3 characters"),
     brand: z.string({
         message: 'Brand is required',
     }).min(3,"Brand must be longer than 3 characters"),
@@ -37,4 +37,5 @@ export const ProductZodSchema = z.object({
     
     // zod schema for update bike product
 export const UpdateProductZodSchema = ProductZodSchema.partial().omit({ isDeleted: true }).strict();
+
 

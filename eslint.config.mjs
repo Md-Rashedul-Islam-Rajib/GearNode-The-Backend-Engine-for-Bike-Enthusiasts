@@ -50,14 +50,14 @@ export default [
                 { varsIgnorePattern: '^_' },
             ],
             '@typescript-eslint/no-empty-object-type': 'off',
-            '@typescript-eslint/no-unused-expressions': [
-                'warn',
-                {
-                    allowShortCircuit: true,
-                    allowTernary: true,
-                    allowTaggedTemplates: true,
-                },
-            ],
+            // '@typescript-eslint/no-unused-expressions': [
+            //     'warn',
+            //     {
+            //         allowShortCircuit: true,
+            //         allowTernary: true,
+            //         allowTaggedTemplates: true,
+            //     },
+            // ],
         },
     },
 ];

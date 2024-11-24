@@ -18,7 +18,7 @@ app.use("/api/products", product_route_1.default);
 app.use("/api/orders", order_route_1.default);
 app.use("/api/orders/revenue", revenue_route_1.default);
 // global error handler
-app.use((error, req, res, next) => {
+app.use((error, req, res, _next) => {
     let errorMessage;
     if (error instanceof zod_1.ZodError) {
         errorMessage = error.errors
@@ -28,6 +28,6 @@ app.use((error, req, res, next) => {
     else {
         errorMessage = error.message || "Something went wrong";
     }
-    res.status(error.status || 500).json({ error: errorMessage });
+    res.status(error.status || 500).json({ message: errorMessage, success: false, error, stack: error.stack });
 });
 exports.default = app;

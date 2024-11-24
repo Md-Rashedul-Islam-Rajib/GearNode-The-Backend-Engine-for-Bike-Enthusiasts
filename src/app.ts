@@ -1,9 +1,10 @@
-import { StatusfullError } from './types/error.type';
+
 import express, { Application, NextFunction, Request, Response } from 'express';
-import { ZodError } from 'zod';
+
 import ProductRouter from './app/product/product.route';
 import OrderRouter from './app/order/order.route';
 import RevenueRouter from './app/revenue/revenue.route';
+import { handleErrors } from './errors/handlingErrors';
 
 const app: Application = express();
 
@@ -20,16 +21,6 @@ app.use("/api/orders", OrderRouter);
 app.use("/api/orders/revenue", RevenueRouter);
 
 // global error handler
-app.use((error: StatusfullError, req: Request, res: Response, next: NextFunction) => {
-  let errorMessage;
-  if (error instanceof ZodError) { 
-    errorMessage = error.errors
-				.map((err) => `${err.path.join('.')}: ${err.message}`)
-				.join('; ');
-  } else {
-    errorMessage = error.message || "Something went wrong";
-  }
-  res.status(error.status || 500).json({ error: errorMessage });
-});
+app.use(handleErrors);
 
 export default app;

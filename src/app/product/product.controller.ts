@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongoose';
 import { NextFunction, Request, Response } from 'express';
-import { ProductZodSchema } from './product.zodSchema';
+import { ProductZodSchema, UpdateProductZodSchema } from './product.zodSchema';
 import { TBike } from './product.types';
 import { ProductService } from './product.service';
 
@@ -29,8 +29,9 @@ export class ProductController {
     // controller func for get all products
     static async getProducts(req: Request, res: Response, next: NextFunction) {
         try {
-            const { searchQuery } = req.query;
-            const products = await ProductService.getAllProducts(searchQuery as string);
+            const { searchTerm } = req.query;
+
+            const products = await ProductService.getAllProducts(searchTerm as string);
             if (products.length ===0) {
                return res.status(404).json({
                    message: 'No 🏍 bike found',
@@ -80,7 +81,17 @@ export class ProductController {
     ) {
         try {
             const { id } = req.params;
-            const updatedData = req.body;
+            const updatedData = UpdateProductZodSchema.parse(req.body);
+
+            
+            if (updatedData.quantity && updatedData.quantity == 0) {
+                updatedData.inStock = false;
+            }
+
+            if (updatedData.quantity && updatedData.quantity > 0) {
+                updatedData.inStock = true;
+            }
+
             const updatedProduct = await ProductService.updateProduct(
                 id,
                 updatedData,

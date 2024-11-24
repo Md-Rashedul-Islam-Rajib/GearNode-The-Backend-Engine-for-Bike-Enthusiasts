@@ -17,6 +17,14 @@ class RevenueController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const totalRevenue = yield revenue_service_1.RevenueService.getTotalRevenue();
+                if (!totalRevenue) {
+                    return res
+                        .status(404)
+                        .json({
+                        message: "Revenue calculation failed",
+                        status: false
+                    });
+                }
                 return res
                     .status(200)
                     .json({

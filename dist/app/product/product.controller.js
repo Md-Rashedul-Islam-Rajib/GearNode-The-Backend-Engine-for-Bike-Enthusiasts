@@ -47,8 +47,8 @@ class ProductController {
     static getProducts(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { searchQuery } = req.query;
-                const products = yield product_service_1.ProductService.getAllProducts(searchQuery);
+                const { searchTerm } = req.query;
+                const products = yield product_service_1.ProductService.getAllProducts(searchTerm);
                 if (products.length === 0) {
                     return res.status(404).json({
                         message: 'No 🏍 bike found',
@@ -94,7 +94,7 @@ class ProductController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id } = req.params;
-                const updatedData = req.body;
+                const updatedData = product_zodSchema_1.ProductZodSchema.parse(req.body);
                 const updatedProduct = yield product_service_1.ProductService.updateProduct(id, updatedData);
                 if (!updatedProduct)
                     return res

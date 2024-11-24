@@ -12,9 +12,10 @@ export class ProductService {
 
     // function for get all products
     static async getAllProducts(searchTerm: string) {
+        // default filter parameter
+        const filterOptions: FilterQuery<TProduct> = { isDeleted: false };
 
-        const filterOptions : FilterQuery<TProduct> = { isDeleted: false };
-
+        // optional filter parameter
         if (searchTerm) {
             filterOptions.$or = [
                 { name: { $regex: searchTerm, $options: 'i' } },
@@ -22,19 +23,25 @@ export class ProductService {
                 { category: { $regex: searchTerm, $options: 'i' } },
             ];
         }
-        
+
         const response = await ProductModel.find(filterOptions);
         return response;
     }
 
     // function for getting single product by id
     static async getSingleProductById(id: ObjectId) {
-        const response = await ProductModel.findById({ _id: id, isDeleted: false });
+        const response = await ProductModel.findById({
+            _id: id,
+            isDeleted: false,
+        });
         return response;
     }
 
     // function for updating a product by id
-    static async updateProduct(id: ObjectId, updatedData: Partial<Omit<TProduct,"isDeleted">>) {
+    static async updateProduct(
+        id: ObjectId,
+        updatedData: Partial<Omit<TProduct, 'isDeleted'>>,
+    ) {
         const response = await ProductModel.findByIdAndUpdate(
             { _id: id, isDeleted: false },
             updatedData,

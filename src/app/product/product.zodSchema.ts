@@ -1,15 +1,18 @@
 import { z } from 'zod';
 
-
-
-// zod schema for create bike product 
+// zod schema for create bike product
 export const ProductZodSchema = z.object({
-    name: z.string({
-        message: 'Product name is required',
-    }).trim().min(3,"Name must be longer than 3 characters"),
-    brand: z.string({
-        message: 'Brand is required',
-    }).min(3,"Brand must be longer than 3 characters"),
+    name: z
+        .string({
+            message: 'Product name is required',
+        })
+        .trim()
+        .min(3, 'Name must be longer than 3 characters'),
+    brand: z
+        .string({
+            message: 'Brand is required',
+        })
+        .min(3, 'Brand must be longer than 3 characters'),
     price: z
         .number({
             message: 'Price is required',
@@ -18,9 +21,11 @@ export const ProductZodSchema = z.object({
     category: z.enum(['Mountain', 'Road', 'Hybrid', 'Electric'], {
         message: 'Category is required',
     }),
-    description: z.string({
-        message: 'Description is required',
-    }).min(5,"Description must be longer than 5 characters"),
+    description: z
+        .string({
+            message: 'Description is required',
+        })
+        .min(5, 'Description must be longer than 5 characters'),
     quantity: z
         .number({
             message: 'Quantity is required',
@@ -29,13 +34,10 @@ export const ProductZodSchema = z.object({
     inStock: z.boolean({
         message: 'In-stock status is required',
     }),
-    isDeleted: z
-        .boolean()
-        .default(false)
+    isDeleted: z.boolean().default(false),
 });
-    
-    
-    // zod schema for update bike product
-export const UpdateProductZodSchema = ProductZodSchema.partial().omit({ isDeleted: true }).strict();
 
-
+// zod schema for update bike product
+export const UpdateProductZodSchema = ProductZodSchema.partial()
+    .omit({ isDeleted: true })
+    .strict();

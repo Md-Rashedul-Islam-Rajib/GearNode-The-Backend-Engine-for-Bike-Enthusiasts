@@ -14,10 +14,10 @@ export class ProductController {
         try {
             const productData: TBike = req.body;
             const validatedData = ProductZodSchema.parse(productData);
-            const data = await ProductService.createProduct(validatedData); 
-            const { isDeleted:_, ...restData } = data.toObject(); 
+            const data = await ProductService.createProduct(validatedData);
+            const { isDeleted: _, ...restData } = data.toObject();
             return res.status(201).json({
-                message: "Bike created successfully",
+                message: 'Bike created successfully',
                 status: true,
                 data: restData,
             });
@@ -30,19 +30,22 @@ export class ProductController {
     static async getProducts(req: Request, res: Response, next: NextFunction) {
         try {
             const { searchTerm } = req.query;
+            const products = await ProductService.getAllProducts(
+                searchTerm as string,
+            );
 
-            const products = await ProductService.getAllProducts(searchTerm as string);
-            if (products.length ===0) {
-               return res.status(404).json({
-                   message: 'No 🏍 bike found',
-                   status: false,
-               });
+            // handling not found error
+            if (products.length === 0) {
+                return res.status(404).json({
+                    message: 'No 🏍 bike found',
+                    status: false,
+                });
             }
-         return res.status(200).json({
-             message: 'Bikes retrieved successfully',
-             status: true,
-             data: products,
-         });
+            return res.status(200).json({
+                message: 'Bikes retrieved successfully',
+                status: true,
+                data: products,
+            });
         } catch (error) {
             next(error);
         }
@@ -57,6 +60,8 @@ export class ProductController {
         try {
             const { id } = req.params;
             const product = await ProductService.getSingleProductById(id);
+
+            // handling not found error
             if (!product) {
                 return res.status(404).json({
                     message: 'Bike 🏍🏍🏍 is not found',
@@ -83,11 +88,11 @@ export class ProductController {
             const { id } = req.params;
             const updatedData = UpdateProductZodSchema.parse(req.body);
 
-            
+            // adjusting stock status when quantity is 0
             if (updatedData.quantity && updatedData.quantity == 0) {
                 updatedData.inStock = false;
             }
-
+            // adjusting stock status when quantity greater than 0
             if (updatedData.quantity && updatedData.quantity > 0) {
                 updatedData.inStock = true;
             }
@@ -96,13 +101,14 @@ export class ProductController {
                 id,
                 updatedData,
             );
+
+            // handling not found error
             if (!updatedProduct)
-              return res
+                return res
                     .status(404)
                     .json({ error: 'Bike not found or deleted' });
-            
-            
-           return res.status(200).json({
+
+            return res.status(200).json({
                 message: 'Bike updated successfully',
                 status: true,
                 data: updatedProduct,
@@ -123,7 +129,7 @@ export class ProductController {
             const deletedProduct = await ProductService.deleteProduct(id);
             if (!deletedProduct)
                 return res.status(404).json({ error: 'Bike not found' });
-          return  res.status(200).json({
+            return res.status(200).json({
                 message: 'Bike successfully deleted',
                 status: true,
                 data: {},

@@ -3,7 +3,6 @@ import { Request, Response, NextFunction } from 'express';
 import { ValidationErrorResponse } from './error.type';
 import { ZodError } from 'zod';
 
-
 export const handleErrors = (
     err: unknown,
     req: Request,
@@ -25,17 +24,17 @@ export const handleErrors = (
 
     // handling cast errors
     if (err instanceof MongooseError) {
-        if(err?.name === 'CastError' ){
+        if (err?.name === 'CastError') {
             return res.status(400).json({
                 message: 'Invalid ObjectId',
                 success: false,
                 error: {
                     name: err.name,
-                    errors : err
+                    errors: err,
                 },
-                stack: err.stack
+                stack: err.stack,
             });
-        } 
+        }
     }
     // handling zod validation errors
     if (err instanceof ZodError) {
@@ -44,11 +43,11 @@ export const handleErrors = (
             success: false,
             error: {
                 name: err.name,
-                errors: err.errors || err.issues
+                errors: err.errors || err.issues,
             },
-            stack: err.stack
+            stack: err.stack,
         });
-}
+    }
 
     // handling all other errors except zod and mongoose
     if (err instanceof Error) {

@@ -1,4 +1,3 @@
-
 import express, { Application, NextFunction, Request, Response } from 'express';
 
 import ProductRouter from './app/product/product.route';
@@ -8,17 +7,18 @@ import { handleErrors } from './errors/handlingErrors';
 
 const app: Application = express();
 
+// parser
 app.use(express.json());
 
+// home route
 app.get('/', (req: Request, res: Response) => {
     res.send('Welcome to 🏍🏍🏍 GearNode 🏍🏍🏍');
 });
 
-
 // App routes
-app.use("/api/products", ProductRouter);
-app.use("/api/orders", OrderRouter);
-app.use("/api/orders/revenue", RevenueRouter);
+app.use('/api/products', ProductRouter);
+app.use('/api/orders', OrderRouter);
+app.use('/api/orders/revenue', RevenueRouter);
 
 // global error handler
 app.use(handleErrors);

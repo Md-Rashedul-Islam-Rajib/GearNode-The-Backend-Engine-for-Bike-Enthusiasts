@@ -1,5 +1,5 @@
-import mongoose, { Schema } from "mongoose";
-import { TProduct } from "./product.types";
+import mongoose, { Schema } from 'mongoose';
+import { TProduct } from './product.types';
 
 const ProductSchema = new Schema<TProduct>(
     {
@@ -34,12 +34,12 @@ const ProductSchema = new Schema<TProduct>(
         },
         isDeleted: {
             type: Boolean,
-            default: false
-        }
+            default: false,
+        },
     },
     {
         timestamps: true,
     },
 );
 
-export const ProductModel = mongoose.model("Bike", ProductSchema);
+export const ProductModel = mongoose.model('Bike', ProductSchema);

@@ -22,14 +22,17 @@ class OrderController {
                 const { email, product, quantity, totalPrice: orderPrice, } = dataForValidation;
                 const motorBike = yield product_model_1.ProductModel.findById(product);
                 const totalPrice = orderPrice || motorBike.price * quantity;
+                // checking availability of stock
                 if (!motorBike.inStock) {
-                    return next(new Error("Out of stock"));
+                    return next(new Error('Out of stock'));
                 }
                 // Checking availability of selected motorBike
                 if (motorBike.quantity < quantity) {
                     return next(new Error(`Insufficient stock. Only ${motorBike.quantity} available`));
                 }
+                // adjusting quantity after successful order
                 motorBike.quantity -= quantity;
+                // update stock status when 0 bike left
                 const availability = motorBike.quantity <= 0;
                 if (availability) {
                     motorBike.inStock = false;

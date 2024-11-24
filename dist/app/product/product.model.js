@@ -57,9 +57,10 @@ const ProductSchema = new mongoose_1.Schema({
     },
     isDeleted: {
         type: Boolean,
-        default: false
-    }
+        default: false,
+    },
 }, {
     timestamps: true,
+    versionKey: false
 });
-exports.ProductModel = mongoose_1.default.model("Bike", ProductSchema);
+exports.ProductModel = mongoose_1.default.model('Bike', ProductSchema);

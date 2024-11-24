@@ -6,16 +6,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrderZodSchema = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const zod_1 = require("zod");
+// custom zod schema for handling mongoDB objectId type
 const ObjectIdSchema = zod_1.z
     .string()
     .refine((value) => mongoose_1.default.Types.ObjectId.isValid(value), {
-    message: "Invalid ObjectId",
+    message: 'Invalid ObjectId',
 });
 exports.OrderZodSchema = zod_1.z.object({
-    email: zod_1.z
-        .string()
-        .email('Invalid email address')
-        .min(1),
+    email: zod_1.z.string().email('Invalid email address').min(1),
     product: ObjectIdSchema,
     quantity: zod_1.z
         .number()
@@ -23,5 +21,6 @@ exports.OrderZodSchema = zod_1.z.object({
         .positive('Quantity must be a positive number'),
     totalPrice: zod_1.z
         .number()
-        .positive("TotalPrice must be a positive number")
+        .positive('TotalPrice must be a positive number')
+        .optional(),
 });

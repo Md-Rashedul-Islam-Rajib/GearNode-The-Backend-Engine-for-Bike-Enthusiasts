@@ -23,7 +23,9 @@ class ProductService {
     // function for get all products
     static getAllProducts(searchTerm) {
         return __awaiter(this, void 0, void 0, function* () {
+            // default filter parameter
             const filterOptions = { isDeleted: false };
+            // optional filter parameter
             if (searchTerm) {
                 filterOptions.$or = [
                     { name: { $regex: searchTerm, $options: 'i' } },
@@ -38,7 +40,10 @@ class ProductService {
     // function for getting single product by id
     static getSingleProductById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield product_model_1.ProductModel.findById({ _id: id, isDeleted: false });
+            const response = yield product_model_1.ProductModel.findById({
+                _id: id,
+                isDeleted: false,
+            });
             return response;
         });
     }

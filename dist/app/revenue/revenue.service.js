@@ -18,21 +18,21 @@ class RevenueService {
             const revenue = yield order_model_1.OrderModel.aggregate([
                 {
                     $lookup: {
-                        from: "bikes",
-                        localField: "product",
-                        foreignField: "_id",
-                        as: "bikeInfo",
+                        from: 'bikes',
+                        localField: 'product',
+                        foreignField: '_id',
+                        as: 'bikeInfo',
                     },
                 },
                 {
-                    $unwind: "$bikeInfo",
+                    $unwind: '$bikeInfo',
                 },
                 {
                     $group: {
                         _id: null,
                         totalRevenue: {
                             $sum: {
-                                $multiply: ["$bikeInfo.price", "$quantity"],
+                                $multiply: ['$bikeInfo.price', '$quantity'],
                             },
                         },
                     },

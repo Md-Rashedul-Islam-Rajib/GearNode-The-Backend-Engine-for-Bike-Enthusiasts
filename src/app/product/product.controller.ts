@@ -128,7 +128,10 @@ export class ProductController {
             const { id } = req.params;
             const deletedProduct = await ProductService.deleteProduct(id);
             if (!deletedProduct)
-                return res.status(404).json({ error: 'Bike not found' });
+                return res.status(404).json({
+                    message: 'Bike not found',
+                    status : false
+                });
             return res.status(200).json({
                 message: 'Bike successfully deleted',
                 status: true,

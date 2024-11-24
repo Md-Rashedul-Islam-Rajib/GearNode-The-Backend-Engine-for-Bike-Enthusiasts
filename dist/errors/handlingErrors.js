@@ -47,9 +47,9 @@ const handleErrors = (err, req, res, next) => {
                 success: false,
                 error: {
                     name: err.name,
-                    errors: err
+                    errors: err,
                 },
-                stack: err.stack
+                stack: err.stack,
             });
         }
     }
@@ -60,9 +60,9 @@ const handleErrors = (err, req, res, next) => {
             success: false,
             error: {
                 name: err.name,
-                errors: err.errors || err.issues
+                errors: err.errors || err.issues,
             },
-            stack: err.stack
+            stack: err.stack,
         });
     }
     // handling all other errors except zod and mongoose

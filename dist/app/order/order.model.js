@@ -28,22 +28,24 @@ const mongoose_1 = __importStar(require("mongoose"));
 exports.OrderSchema = new mongoose_1.Schema({
     email: {
         type: String,
-        required: [true, "email is required"]
+        required: [true, 'email is required'],
     },
     product: {
         type: mongoose_1.Schema.Types.ObjectId,
         ref: 'Bike',
-        required: [true, "Product is required"]
+        required: [true, 'Product is required'],
     },
     quantity: {
         type: Number,
-        required: [true, "Quantity is required"],
-        min: [1, "Quantity must be a positive number"]
+        required: [true, 'Quantity is required'],
+        min: [1, 'Quantity must be a positive number'],
     },
     totalPrice: {
         type: Number,
-    }
+        required: false
+    },
 }, {
-    timestamps: true
+    timestamps: true,
+    versionKey: false
 });
-exports.OrderModel = mongoose_1.default.model("Order", exports.OrderSchema);
+exports.OrderModel = mongoose_1.default.model('Order', exports.OrderSchema);

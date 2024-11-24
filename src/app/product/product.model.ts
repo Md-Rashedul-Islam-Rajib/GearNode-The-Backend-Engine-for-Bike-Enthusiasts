@@ -39,6 +39,7 @@ const ProductSchema = new Schema<TProduct>(
     },
     {
         timestamps: true,
+        versionKey: false
     },
 );
 

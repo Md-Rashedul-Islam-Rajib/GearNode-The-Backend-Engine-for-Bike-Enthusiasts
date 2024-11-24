@@ -15,7 +15,10 @@ export const OrderZodSchema = z.object({
         .number()
         .int('Quantity must be an integer')
         .positive('Quantity must be a positive number'),
-    totalPrice: z.number().positive('TotalPrice must be a positive number'),
+    totalPrice: z
+        .number()
+        .positive('TotalPrice must be a positive number')
+        .optional(),
 });
 
 export type OrderType = z.infer<typeof OrderZodSchema>;

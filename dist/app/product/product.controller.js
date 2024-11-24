@@ -33,7 +33,7 @@ class ProductController {
                 const data = yield product_service_1.ProductService.createProduct(validatedData);
                 const _a = data.toObject(), { isDeleted: _ } = _a, restData = __rest(_a, ["isDeleted"]);
                 return res.status(201).json({
-                    message: "Bike created successfully",
+                    message: 'Bike created successfully',
                     status: true,
                     data: restData,
                 });
@@ -49,6 +49,7 @@ class ProductController {
             try {
                 const { searchTerm } = req.query;
                 const products = yield product_service_1.ProductService.getAllProducts(searchTerm);
+                // handling not found error
                 if (products.length === 0) {
                     return res.status(404).json({
                         message: 'No 🏍 bike found',
@@ -72,6 +73,7 @@ class ProductController {
             try {
                 const { id } = req.params;
                 const product = yield product_service_1.ProductService.getSingleProductById(id);
+                // handling not found error
                 if (!product) {
                     return res.status(404).json({
                         message: 'Bike 🏍🏍🏍 is not found',
@@ -95,13 +97,16 @@ class ProductController {
             try {
                 const { id } = req.params;
                 const updatedData = product_zodSchema_1.UpdateProductZodSchema.parse(req.body);
+                // adjusting stock status when quantity is 0
                 if (updatedData.quantity && updatedData.quantity == 0) {
                     updatedData.inStock = false;
                 }
+                // adjusting stock status when quantity greater than 0
                 if (updatedData.quantity && updatedData.quantity > 0) {
                     updatedData.inStock = true;
                 }
                 const updatedProduct = yield product_service_1.ProductService.updateProduct(id, updatedData);
+                // handling not found error
                 if (!updatedProduct)
                     return res
                         .status(404)
@@ -124,7 +129,10 @@ class ProductController {
                 const { id } = req.params;
                 const deletedProduct = yield product_service_1.ProductService.deleteProduct(id);
                 if (!deletedProduct)
-                    return res.status(404).json({ error: 'Bike not found' });
+                    return res.status(404).json({
+                        message: 'Bike not found',
+                        status: false
+                    });
                 return res.status(200).json({
                     message: 'Bike successfully deleted',
                     status: true,

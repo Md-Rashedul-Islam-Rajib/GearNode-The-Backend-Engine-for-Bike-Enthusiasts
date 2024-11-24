@@ -19,10 +19,12 @@ export const OrderSchema = new Schema<IOrder>(
         },
         totalPrice: {
             type: Number,
+            required : false
         },
     },
     {
         timestamps: true,
+        versionKey: false
     },
 );
 

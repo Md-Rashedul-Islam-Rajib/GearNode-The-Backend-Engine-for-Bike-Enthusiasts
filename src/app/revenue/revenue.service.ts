@@ -1,6 +1,8 @@
 import { OrderModel } from "../order/order.model";
 
-export class getRevenue {
+export class RevenueService {
+
+    // service func for calculate revenue
     static async getTotalRevenue() {
         const revenue = await OrderModel.aggregate([
             {

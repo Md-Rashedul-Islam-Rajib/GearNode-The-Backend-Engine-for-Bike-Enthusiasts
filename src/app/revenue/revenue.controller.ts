@@ -11,6 +11,14 @@ export class RevenueController {
     ) {
         try {
             const totalRevenue = await RevenueService.getTotalRevenue();
+            if (!totalRevenue) {
+                return res
+                    .status(404)
+                    .json({
+                        message: "Revenue calculation failed",
+                        status : false
+                    });
+            }
             return res
                 .status(200)
                 .json({

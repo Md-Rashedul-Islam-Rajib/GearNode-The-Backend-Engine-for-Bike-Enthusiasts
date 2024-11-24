@@ -9,16 +9,28 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.OrderService = void 0;
-const order_model_1 = require("./order.model");
-class OrderService {
-    // service func for create order
-    static createOrder(data) {
+exports.RevenueController = void 0;
+const revenue_service_1 = require("./revenue.service");
+class RevenueController {
+    // controller func for getting total revenue
+    static getRevenue(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            const order = new order_model_1.OrderModel(data);
-            const response = yield order.save();
-            return response;
+            try {
+                const totalRevenue = yield revenue_service_1.RevenueService.getTotalRevenue();
+                return res
+                    .status(200)
+                    .json({
+                    message: "Revenue calculated successfully",
+                    status: true,
+                    data: {
+                        totalRevenue
+                    }
+                });
+            }
+            catch (error) {
+                next(error);
+            }
         });
     }
 }
-exports.OrderService = OrderService;
+exports.RevenueController = RevenueController;

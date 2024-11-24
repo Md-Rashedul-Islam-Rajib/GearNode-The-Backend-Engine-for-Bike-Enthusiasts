@@ -21,14 +21,14 @@ class ProductService {
         });
     }
     // function for get all products
-    static getAllProducts(searchQuery) {
+    static getAllProducts(searchTerm) {
         return __awaiter(this, void 0, void 0, function* () {
             const filterOptions = { isDeleted: false };
-            if (searchQuery) {
+            if (searchTerm) {
                 filterOptions.$or = [
-                    { name: { $regex: searchQuery, $options: 'i' } },
-                    { brand: { $regex: searchQuery, $options: 'i' } },
-                    { category: { $regex: searchQuery, $options: 'i' } },
+                    { name: { $regex: searchTerm, $options: 'i' } },
+                    { brand: { $regex: searchTerm, $options: 'i' } },
+                    { category: { $regex: searchTerm, $options: 'i' } },
                 ];
             }
             const response = yield product_model_1.ProductModel.find(filterOptions);

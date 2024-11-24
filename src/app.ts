@@ -3,6 +3,7 @@ import express, { Application, NextFunction, Request, Response } from 'express';
 import { ZodError } from 'zod';
 import ProductRouter from './app/product/product.route';
 import OrderRouter from './app/order/order.route';
+import RevenueRouter from './app/revenue/revenue.route';
 
 const app: Application = express();
 
@@ -16,6 +17,7 @@ app.get('/', (req: Request, res: Response) => {
 // App routes
 app.use("/api/products", ProductRouter);
 app.use("/api/orders", OrderRouter);
+app.use("/api/orders/revenue", RevenueRouter);
 
 // global error handler
 app.use((error: StatusfullError, req: Request, res: Response, next: NextFunction) => {

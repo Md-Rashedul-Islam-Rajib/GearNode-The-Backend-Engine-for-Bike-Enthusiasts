@@ -11,15 +11,15 @@ export class ProductService {
     }
 
     // function for get all products
-    static async getAllProducts(searchQuery: string) {
+    static async getAllProducts(searchTerm: string) {
 
         const filterOptions : FilterQuery<TProduct> = { isDeleted: false };
 
-        if (searchQuery) {
+        if (searchTerm) {
             filterOptions.$or = [
-                { name: { $regex: searchQuery, $options: 'i' } },
-                { brand: { $regex: searchQuery, $options: 'i' } },
-                { category: { $regex: searchQuery, $options: 'i' } },
+                { name: { $regex: searchTerm, $options: 'i' } },
+                { brand: { $regex: searchTerm, $options: 'i' } },
+                { category: { $regex: searchTerm, $options: 'i' } },
             ];
         }
         
@@ -34,7 +34,7 @@ export class ProductService {
     }
 
     // function for updating a product by id
-    static async updateProduct(id: ObjectId, updatedData: Partial<TProduct>) {
+    static async updateProduct(id: ObjectId, updatedData: Partial<Omit<TProduct,"isDeleted">>) {
         const response = await ProductModel.findByIdAndUpdate(
             { _id: id, isDeleted: false },
             updatedData,

@@ -1,5 +1,4 @@
 import mongoose, { Schema } from "mongoose";
-// import { OrderType } from "./order.zodSchema";
 import { IOrder } from "./order.type";
 
 export const OrderSchema = new Schema<IOrder>({
@@ -19,44 +18,34 @@ export const OrderSchema = new Schema<IOrder>({
     },
     totalPrice: {
         type: Number,
-        // required: true
+        
     }
 });
 
-// middleware for setting totalPrice value and adjusting stock availability
 // OrderSchema.pre('save', async function (next) {
 //     const product = await mongoose.model('Bike').findById(this.product);
 //     if (!product) {
 //         return next(new Error('Bike not found'));
 //     }
+    
+//         if (!product.inStock) {
+//             return next(new Error("Out of stock"));
+//         }
 //     // Checking availability of selected bike
-//      if (product.quantity < this.quantity) {
-//          return next(new Error('Your selected bike is out of stock'));
+//      if (product.quantity < this.quantity ) {
+//          return next(new Error(`Insufficient stock. Only ${product.quantity} available`));
 //     }
     
 //     product.quantity -= this.quantity;
-//     const availability = product.inStock === 0;
+//     const availability = product.quantity === 0;
 //     if (availability) {
 //         product.inStock = false;
 //     };
+//     // setting totalPrice value
+//     this.totalPrice = product.price * this.quantity;
 //     await product.save();
 
-//     // // setting totalPrice value
-//     this.totalPrice = product.price * this.quantity;
     
-//     next();
-// });
-
-
-
-// restoring inStock availability when order removed from db
-// OrderSchema.pre('save', async function (next) {
-//     const product = await mongoose.model('Product').findById(this.product);
-//     if (product) {
-//         product.quantity += this.quantity;
-//         product.inStock = true;
-//         await product.save();
-//     }
 //     next();
 // });
 

@@ -36,18 +36,5 @@ export const ProductZodSchema = z.object({
     
     
     // zod schema for update bike product
-    export const UpdateProductZodSchema = z.object({
-        price: z
-        .number({
-            message: 'Price is required',
-        })
-        .min(0, 'Price must be a positive number'),
-        quantity: z
-        .number({
-            message: 'Quantity is required',
-        })
-        .min(0, 'Quantity must be a positive number'),
-        
-    });
-
+export const UpdateProductZodSchema = ProductZodSchema.partial().omit({ isDeleted: true }).strict();
 

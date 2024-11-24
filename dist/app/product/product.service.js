@@ -21,9 +21,17 @@ class ProductService {
         });
     }
     // function for get all products
-    static getAllProducts() {
+    static getAllProducts(searchQuery) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield product_model_1.ProductModel.find({ isDeleted: false });
+            const filterOptions = { isDeleted: false };
+            if (searchQuery) {
+                filterOptions.$or = [
+                    { name: { $regex: searchQuery, $options: 'i' } },
+                    { brand: { $regex: searchQuery, $options: 'i' } },
+                    { category: { $regex: searchQuery, $options: 'i' } },
+                ];
+            }
+            const response = yield product_model_1.ProductModel.find(filterOptions);
             return response;
         });
     }

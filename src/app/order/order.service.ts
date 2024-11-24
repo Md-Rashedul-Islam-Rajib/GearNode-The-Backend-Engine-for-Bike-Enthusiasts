@@ -1,6 +1,6 @@
 import { OrderModel } from "./order.model";
 import { IOrder } from "./order.type";
-// import { OrderType } from "./order.zodSchema";
+
 
 
 export class OrderService {
@@ -11,5 +11,7 @@ export class OrderService {
         const response = await order.save();
         return response;
     }
+
+    
 
 }

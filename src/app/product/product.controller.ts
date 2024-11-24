@@ -15,11 +15,11 @@ export class ProductController {
             const productData: TBike = req.body;
             const validatedData = ProductZodSchema.parse(productData);
             const data = await ProductService.createProduct(validatedData); 
-            console.log(data);
+            const { isDeleted:_, ...restData } = data.toObject(); 
             return res.status(201).json({
                 message: "Bike created successfully",
                 status: true,
-                data
+                data: restData,
             });
         } catch (error) {
             next(error);
@@ -38,7 +38,7 @@ export class ProductController {
                });
             }
          return res.status(200).json({
-             message: 'Bikes 🏍🏍🏍 retrieved successfully',
+             message: 'Bikes retrieved successfully',
              status: true,
              data: products,
          });
@@ -63,7 +63,7 @@ export class ProductController {
                 });
             }
             return res.status(200).json({
-                message: 'Bike 🏍🏍🏍 retrieved successfully',
+                message: 'Bike retrieved successfully',
                 status: true,
                 data: product,
             });
@@ -88,11 +88,13 @@ export class ProductController {
             if (!updatedProduct)
               return res
                     .status(404)
-                    .json({ error: 'Product not found or deleted' });
+                    .json({ error: 'Bike not found or deleted' });
+            
+            
            return res.status(200).json({
                 message: 'Bike updated successfully',
                 status: true,
-                data: updatedData,
+                data: updatedProduct,
             });
         } catch (error) {
             next(error);
@@ -109,9 +111,9 @@ export class ProductController {
             const { id } = req.params;
             const deletedProduct = await ProductService.deleteProduct(id);
             if (!deletedProduct)
-                return res.status(404).json({ error: 'Product not found' });
+                return res.status(404).json({ error: 'Bike not found' });
           return  res.status(200).json({
-                message: 'Product successfully deleted',
+                message: 'Bike successfully deleted',
                 status: true,
                 data: {},
             });

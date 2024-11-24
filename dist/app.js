@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const zod_1 = require("zod");
 const product_route_1 = __importDefault(require("./app/product/product.route"));
+const order_route_1 = __importDefault(require("./app/order/order.route"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.get('/', (req, res) => {
@@ -13,6 +14,7 @@ app.get('/', (req, res) => {
 });
 // App routes
 app.use("/api/products", product_route_1.default);
+app.use("/api/orders", order_route_1.default);
 // global error handler
 app.use((error, req, res, next) => {
     let errorMessage;

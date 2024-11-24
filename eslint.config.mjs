@@ -9,52 +9,55 @@ import { FlatCompat } from '@eslint/eslintrc';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all,
+    baseDirectory: __dirname,
+    recommendedConfig: js.configs.recommended,
+    allConfig: js.configs.all,
 });
 
 export default [
-  {
-    ignores: ['**/node_modules', '**/dist'],
-  },
-  ...compat.extends(
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'prettier',
-  ),
-  {
-    plugins: {
-      '@typescript-eslint': typescriptEslint,
+    {
+        ignores: ['**/node_modules', '**/dist'],
     },
-
-    languageOptions: {
-      globals: {
-        ...globals.node,
-        process: 'readonly',
-      },
-
-      parser: tsParser,
-      ecmaVersion: 'latest',
-      sourceType: 'module',
-    },
-
-    rules: {
-      'no-unused-vars': 'warn',
-      'prefer-const': 'warn',
-      'no-console': 'warn',
-      'no-undef': 'error',
-      semi: ['warn', 'always'],
-      '@typescript-eslint/no-empty-object-type': 'off',
-      '@typescript-eslint/no-unused-vars': 'off',
-      '@typescript-eslint/no-unused-expressions': [
-        'warn',
-        {
-          allowShortCircuit: true,
-          allowTernary: true,
-          allowTaggedTemplates: true,
+    ...compat.extends(
+        'eslint:recommended',
+        'plugin:@typescript-eslint/recommended',
+        'prettier',
+    ),
+    {
+        plugins: {
+            '@typescript-eslint': typescriptEslint,
         },
-      ],
+
+        languageOptions: {
+            globals: {
+                ...globals.node,
+                process: 'readonly',
+            },
+
+            parser: tsParser,
+            ecmaVersion: 'latest',
+            sourceType: 'module',
+        },
+
+        rules: {
+            'prefer-const': 'warn',
+            'no-console': 'warn',
+            'no-undef': 'error',
+            semi: ['warn', 'always'],
+            'no-unused-vars': ['error', { varsIgnorePattern: '^_' }],
+            '@typescript-eslint/no-unused-vars': [
+                'error',
+                { varsIgnorePattern: '^_' },
+            ],
+            '@typescript-eslint/no-empty-object-type': 'off',
+            '@typescript-eslint/no-unused-expressions': [
+                'warn',
+                {
+                    allowShortCircuit: true,
+                    allowTernary: true,
+                    allowTaggedTemplates: true,
+                },
+            ],
+        },
     },
-  },
 ];

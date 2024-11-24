@@ -24,7 +24,7 @@ The GearNode API is a robust backend solution designed to manage products (bikes
 
 ### ⚙️ Error Handling
 
--   Unified error responses for `validation` (mostly `zod` and `MongoDB`), `casting` (MongoDB `ObjectId`), and `parsing`, `insufficient`, `not found` and almost every possible types of errors.
+-   Handled error responses for `validation` with `zod` and `MongoDB`, `casting` (MongoDB `ObjectId`), and `parsing`, `insufficient`, `not found` and almost every possible types of errors.
 -   Clear and structured error messages to facilitate debugging.
 
 ---
@@ -68,8 +68,8 @@ The GearNode API is a robust backend solution designed to manage products (bikes
    Create a `.env` file in the root directory with the following fields:
 
     ```env
-    PORT=4242
-    MONGODB_URI=your_mongo_db_uri
+    PORT=3333
+    DB_URL=your_mongo_db_uri
     ```
 
 4. Start the server:
@@ -93,7 +93,7 @@ The GearNode API is a robust backend solution designed to manage products (bikes
 5. Access the API at:
 
     ```bash
-    http://localhost:4242
+    http://localhost:3333
     ```
 
 ---
@@ -102,7 +102,7 @@ The GearNode API is a robust backend solution designed to manage products (bikes
 
 ### Base URL
 
-`http://localhost:4242`
+`http://localhost:3333`
 
 ### Endpoints
 

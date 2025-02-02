@@ -44,11 +44,27 @@ export default [
             'no-console': 'warn',
             'no-undef': 'error',
             semi: ['warn', 'always'],
-            'no-unused-vars': ['error', { varsIgnorePattern: '^_' }],
-            '@typescript-eslint/no-unused-vars': [
-                'error',
-                { varsIgnorePattern: '^_' },
-            ],
+                 "no-unused-vars": ["error", {
+        "args": "all",
+        "argsIgnorePattern": "^_",
+        "caughtErrors": "all",
+        "caughtErrorsIgnorePattern": "^_",
+        "destructuredArrayIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "ignoreRestSiblings": false
+      }],
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          "args": "all",
+          "argsIgnorePattern": "^_",
+          "caughtErrors": "all",
+          "caughtErrorsIgnorePattern": "^_",
+          "destructuredArrayIgnorePattern": "^_",
+          "varsIgnorePattern": "^_",
+          "ignoreRestSiblings": false
+        }
+      ],
             '@typescript-eslint/no-empty-object-type': 'off',
             // '@typescript-eslint/no-unused-expressions': [
             //     'warn',

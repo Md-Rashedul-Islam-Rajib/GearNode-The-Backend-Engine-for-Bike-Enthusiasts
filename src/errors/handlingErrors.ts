@@ -1,15 +1,18 @@
-import mongoose, { MongooseError } from 'mongoose';
-import { Request, Response, NextFunction } from 'express';
-import { ValidationErrorResponse } from './error.type';
-import { ZodError } from 'zod';
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
-export const handleErrors = (
-    err: unknown,
-    req: Request,
-    res: Response,
-    next: NextFunction,
+import mongoose, { MongooseError } from 'mongoose';
+import { ErrorRequestHandler } from 'express';
+// import { ValidationErrorResponse } from './error.type';
+import { ZodError } from 'zod';
+import { ValidationErrorResponse } from './error.type';
+
+export const handleErrors: ErrorRequestHandler = (
+    err,
+    _req,
+    res,
+    _next
 ) => {
-    // handling mongoose errors
+   // handling mongoose errors
     if (err instanceof mongoose.Error.ValidationError) {
         return res.status(400).json({
             message: 'Validation failed',

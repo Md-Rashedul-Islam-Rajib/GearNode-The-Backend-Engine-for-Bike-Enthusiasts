@@ -1,4 +1,5 @@
 "use strict";
+/* eslint-disable @typescript-eslint/no-unused-vars */
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -25,8 +26,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.handleErrors = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
+// import { ValidationErrorResponse } from './error.type';
 const zod_1 = require("zod");
-const handleErrors = (err, req, res, next) => {
+const handleErrors = (err, _req, res, _next) => {
     // handling mongoose errors
     if (err instanceof mongoose_1.default.Error.ValidationError) {
         return res.status(400).json({
